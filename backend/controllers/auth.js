@@ -103,7 +103,7 @@ const AuthController = {
     },
     getUser: async (req, res) => {
         try {
-            const user = await User.findOne({ id: req.body._id })
+            const user = await User.findOne({ username: req.params.user })
             // console.log("first")
             res.status(200).json(user)
         } catch (err) {

@@ -14,7 +14,7 @@ router.post('/signin', authController.signIn);
 router.put('/user/update/:id', userupdateValidator, runValidation, authController.updateUser);
 router.delete('/user/delete/:id', userdeleteValidator, runValidation, authController.deleteUser);
 
-router.get('/user', authController.getUser);
+router.get('/user/:user', authController.getUser);
 router.get('/users', authController.getAllUser);
 
 module.exports = router;

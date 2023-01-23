@@ -26,8 +26,8 @@ function myAccount() {
 
         
         const fetchUser = async () => {
-
-                const data = await axios.get('http://localhost:3005/api/user').then((res) => {
+                const user = localStorage.getItem("username");
+                const data = await axios.get('http://localhost:3005/api/user/'+user).then((res) => {
 
                         console.log(res);
                         setInput(res.data);
