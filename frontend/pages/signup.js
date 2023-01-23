@@ -20,6 +20,7 @@ const SignUpForm = () => {
            const data = await axios.post('http://localhost:3005/api/signup',input).then((res)=>{
             
             console.log("res",res)
+            localStorage.setItem("username",res.data.user.username);
             alert("Sign Up Successfully")
             router.push('/dashboard')
         }).catch((error)=>

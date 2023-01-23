@@ -76,7 +76,7 @@ const BlogController = {
 
     getBlog: async (req, res) => {
         try {
-            const blog = await Blog.findOne({ id: req.body._id })
+            const blog = await Blog.find({ username: req.params.user})
             res.status(200).json(blog)
         } catch (err) {
             res.status(500).json(err);

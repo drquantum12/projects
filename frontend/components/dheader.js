@@ -11,6 +11,7 @@ export default function Home() {
         
         alert("would you like to Sign Out")
         req.session.destroy();
+        localStorage.clear();
         router.push('/dashboard')
     };
     return (

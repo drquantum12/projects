@@ -18,6 +18,7 @@ const SignInForm = () => {
 
            const data = await axios.post('http://localhost:3005/api/signin',input).then((res)=>{           
             console.log("res",res)
+            localStorage.setItem('username',res.data.user.username);
             // const token = res.data.token;
             // const decode = jwt_decode(token);
             // console.log(decode,'decode');

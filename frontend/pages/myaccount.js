@@ -6,13 +6,15 @@ function myAccount() {
         const [firstname, setfirstname] = useState('');
         const [lastname, setlastname] = useState('');
         const [email, setemail] = useState('');
-        const [showDiv, setShowDiv] = useState(false)
+        const [showDiv, setShowDiv] = useState(false);
+        const [commentText,setcommentText] = useState('');
         const [input, setInput] = useState({
                 _id:'',
                 firstname: '',
                 lastname: '',
                 email: ''
         })
+        const [blogs,setBlogs] = useState([]);
         
         const handleChange = (e) => {
                 setFormData({
@@ -37,9 +39,37 @@ function myAccount() {
                 })
         }
 
+        const fetchBlogs = async () => {
+                const user = localStorage.getItem("username");
+                let blog_data_temp = [];
+                const blog_data = await axios.get('http://localhost:3005/api/user/blog/'+user).then((res) => {
+
+                        // console.log(res,'blogs');
+                        
+                        blog_data_temp = res.data;
+                        setBlogs(res.data);
+                        // setfirstname(JSON.stringify(blog_data_temp));
+                        console.log(firstname,'array');
+
+                        
+                }).catch((error) => {
+                        console.log(error)
+
+                }).finally(()=>{
+                        console.log(blogs,'blogs')})
+        }
+
         useEffect(() => {
-                fetchUser()
+                fetchUser(),
+                fetchBlogs()
         },[])
+        const handleComment = async(objectId)=>{
+                comment.username = localStorage.getItem("username");
+                comment.text = commentText;
+                const data = await axios.post('http://localhost:3005/api/comment/'+objectId,comment);
+                // console.log(comment)
+            }
+
         const handleSubmit = async() =>{
                 input.firstname = firstname;
                 input.lastname = lastname;
@@ -74,6 +104,10 @@ function myAccount() {
       <button type="submit">Submit</button>
     </form>
                         </div> }
+                        <br/>
+                        <br/>
+
+                        
                 
                 </div>
                 

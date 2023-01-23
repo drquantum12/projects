@@ -4,7 +4,6 @@ import Author from "../components/author"
 import { useEffect, useState } from "react"
 import axios from 'axios'
 import input from '../pages/signin';
-import { stringify } from 'querystring';
 
 
 export default function section2() {
@@ -32,10 +31,10 @@ export default function section2() {
         fetchBlogs()
     }, [])
     const handleComment = async(objectId)=>{
-        comment.username = input.username;
+        comment.username = localStorage.getItem("username");
         comment.text = commentText;
-        // const data = await axios.post('http://localhost:3005/api/comment/'+objectId,comment);
-        console.log(comment)
+        const data = await axios.post('http://localhost:3005/api/comment/'+objectId,comment);
+        // console.log(comment)
     }
 
     return (
@@ -70,7 +69,7 @@ export default function section2() {
                         </div>
                         <div className="info flex justify-center flex-col py-4">
                             <p className="text-1xl md:text-1xl font-bold hover:text-gray-600">
-                                    {post.comments}</p>
+                                    {post.comments.map((com)=><p>{com}</p>)}</p>
                         </div>
                         <div className="info flex justify-center flex-col py-4">
                            

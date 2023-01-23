@@ -13,7 +13,7 @@ router.post('/blog', blogValidator, runValidation, blogController.createBlog);
 router.put('/update/:id', blogupdateValidator, runValidation, blogController.updateBlog);
 router.delete('/delete/:id', blogdeleteValidator, runValidation, blogController.deleteBlog);
 
-router.get('/blog', blogController.getBlog);
+router.get('/user/blog/:user', blogController.getBlog);
 router.get('/blogs', blogController.getAllBlog);
 
 
