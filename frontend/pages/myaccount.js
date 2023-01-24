@@ -13,8 +13,9 @@ function myAccount() {
                 firstname: '',
                 lastname: '',
                 email: ''
-        })
-        const [blogs,setBlogs] = useState([]);
+        });
+        const [blg,setBlg] = useState([]);
+        let newArray = [];
         
         const handleChange = (e) => {
                 setFormData({
@@ -41,22 +42,19 @@ function myAccount() {
 
         const fetchBlogs = async () => {
                 const user = localStorage.getItem("username");
-                let blog_data_temp = [];
                 const blog_data = await axios.get('http://localhost:3005/api/user/blog/'+user).then((res) => {
-
-                        // console.log(res,'blogs');
-                        
-                        blog_data_temp = res.data;
-                        setBlogs(res.data);
-                        // setfirstname(JSON.stringify(blog_data_temp));
-                        console.log(firstname,'array');
+                        if(blg.length == 0){
+                        res.data.forEach(element => {
+                        blg.push(element);
+                        });}
 
                         
                 }).catch((error) => {
                         console.log(error)
 
                 }).finally(()=>{
-                        console.log(blogs,'blogs')})
+                        // console.log(blogs,'blogs')
+                })
         }
 
         useEffect(() => {
@@ -106,7 +104,47 @@ function myAccount() {
                         </div> }
                         <br/>
                         <br/>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+               {
+               blg.map((post) => {
+                  
+                return (
+                    <div className="items bg-gray-200">
+                                              
+                        <div className="images">
+                            {/* <Link href={"/"} legacyBehavior><Image src={post.image} className="rounded-lg" alt="blog image" width={300} height={300} /></Link> */}
+                        </div>
+                      
+                        <div className="info flex justify-center flex-col py-4">
+                                <p className="text-1xl md:text-1xl font-bold hover:text-gray-600">
+                                    {post.title}</p>
+                        </div>
+                        <div className="info flex justify-center flex-col py-4">
+                                <p className="text-1xl md:text-1xl font-bold hover:text-gray-600">
+                                    {post.description}</p>
+                        </div>
+                        <div className="info flex justify-center flex-col py-4">
+                            <p className="text-1xl md:text-1xl font-bold hover:text-gray-600">
+                                    {post.comments.map((com)=><p>{com}</p>)}</p>
+                        </div>
+                        <div className="info flex justify-center flex-col py-4">
+                           
+                                <textarea placeholder="post comment" className="bg-gray-100 border-2 border-black rounded-lg text-1xl md:text-1xl font-bold hover:text-gray-600"
+                                value={commentText} onChange={e=>{setcommentText(e.currentTarget.value);}}>
+                                   </textarea>
+                                   <button
+                                  type='button'
+                                 className='inline-block w-10 py-2 border-2 border-green-600 font-extrabold text-green-600 text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out'   
+                                 onClick={() => handleComment(post._id)}        
+                                   >Post
+                               </button>
+                        </div>
 
+                    </div>
+                )
+                })
+                }
+            </div>
                         
                 
                 </div>
