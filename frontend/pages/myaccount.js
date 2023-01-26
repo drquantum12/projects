@@ -8,6 +8,10 @@ function myAccount() {
         const [email, setemail] = useState('');
         const [showDiv, setShowDiv] = useState(false);
         const [commentText,setcommentText] = useState('');
+        const[comment,setComment] = useState({
+                "username":"",
+                "text":""
+            });
         const [input, setInput] = useState({
                 _id:'',
                 firstname: '',
@@ -77,11 +81,12 @@ function myAccount() {
 
         return (
                 <div className="text-center">
+                        <div>
                         id - {input._id}<br/>
                         firstname - {input.firstname}<br/>
                         lastname - {input.lastname}<br/>
                         email - {input.email}<br/>
-                        <button onClick={() => setShowDiv(!showDiv)}>update</button>
+                        <button onClick={() => setShowDiv(!showDiv)}>update</button></div>
                         { showDiv && <div>
                                 <form onSubmit={handleSubmit}>
       <label>
@@ -132,12 +137,19 @@ function myAccount() {
                                 <textarea placeholder="post comment" className="bg-gray-100 border-2 border-black rounded-lg text-1xl md:text-1xl font-bold hover:text-gray-600"
                                 value={commentText} onChange={e=>{setcommentText(e.currentTarget.value);}}>
                                    </textarea>
+                                   <div className="flex mx-2 flex-row">
                                    <button
                                   type='button'
-                                 className='inline-block w-10 py-2 border-2 border-green-600 font-extrabold text-green-600 text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out'   
+                                 className='inline-block w-20 mx-1 my-1 py-2 border-2 border-green-600 font-extrabold text-green-600 text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out'   
                                  onClick={() => handleComment(post._id)}        
                                    >Post
                                </button>
+                               <button
+                                  type='button'
+                                 className='inline-block w-20 mx-1 my-1 py-2 border-2 border-green-600 font-extrabold text-green-600 text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out'   
+                                 onClick={() => handleUpdate(post._id)}        
+                                   >Update
+                               </button></div>
                         </div>
 
                     </div>

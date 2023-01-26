@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 const Createblog = () => {
 
@@ -13,7 +13,7 @@ const Createblog = () => {
     const imageHandler = (e) => {
         setSelectedFile(e.target.files[0]);
         setCheckFile(true);
-        setInput({ ...input, image: e.target.value })
+        setInput({ ...input, image: e.target.value});
     }
 
     const router = useRouter()
@@ -27,10 +27,11 @@ const Createblog = () => {
     })
 
     const handleSubmit = async () => {
-
+        // console.log(input);
         const data = await axios.post('http://localhost:3005/api/blog', input).then((res) => {
 
             console.log("res", res)
+            console.log('input',input)
             alert("blog Uploaded")
             router.push('/dashboard')
         }).catch((error) => {

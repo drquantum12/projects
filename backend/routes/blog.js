@@ -14,6 +14,7 @@ router.put('/update/:id', blogupdateValidator, runValidation, blogController.upd
 router.delete('/delete/:id', blogdeleteValidator, runValidation, blogController.deleteBlog);
 
 router.get('/user/blog/:user', blogController.getBlog);
+router.get('/blog/:id', blogController.getBlogById);
 router.get('/blogs', blogController.getAllBlog);
 
 

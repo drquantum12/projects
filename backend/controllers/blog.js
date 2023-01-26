@@ -4,6 +4,7 @@ const multer = require('multer')
 const path = require('path')
 const express = require('express')
 const app = express()
+const cloudinary = require('../cloudinary');
 
 // router.use(express.static(__dirname+"./uploads"))
 
@@ -35,17 +36,19 @@ const app = express()
 //     res.status(200).json("file uploaded")
 // });
 
+const saveImage = async(img) => {
+    const result = await cloudinary.uploader.upload(image,{folder:blog_images});
+    return result.secure_url
+}
 
 const BlogController = {
 
     createBlog: async (req, res) => {
-        console.log("first");
-        console.log(req.file)
         const newBlog = new Blog({
             title: req.body.title,
             username: req.body.username,
             description: req.body.description,
-            // image: req.file.filename
+             image: saveImage(req.file.filename)
         });
         try {
             const savedBlog = await newBlog.save();
@@ -79,6 +82,14 @@ const BlogController = {
             const blog = await Blog.find({ username: req.params.user})
             res.status(200).json(blog)
         } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    getBlogById: async (req, res) => {
+        try {
+            const blog = await Blog.findById(req.params.id);
+            res.status(200).json(blog);
+        } catch (err){
             res.status(500).json(err);
         }
     },
